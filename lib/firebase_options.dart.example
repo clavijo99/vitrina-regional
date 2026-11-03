@@ -1,0 +1,46 @@
+// EJEMPLO de la forma que tiene el archivo que genera `flutterfire configure`.
+// NO copies esto a mano: ejecuta `flutterfire configure` y se generará
+// lib/firebase_options.dart con los valores reales de tu proyecto.
+
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    if (kIsWeb) return web;
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        return ios;
+      default:
+        throw UnsupportedError('Plataforma no configurada.');
+    }
+  }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'REEMPLAZAR',
+    appId: '1:000000000000:web:0000000000000000',
+    messagingSenderId: '000000000000',
+    projectId: 'tu-proyecto-firebase',
+    storageBucket: 'tu-proyecto-firebase.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'REEMPLAZAR',
+    appId: '1:000000000000:android:0000000000000000',
+    messagingSenderId: '000000000000',
+    projectId: 'tu-proyecto-firebase',
+    storageBucket: 'tu-proyecto-firebase.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'REEMPLAZAR',
+    appId: '1:000000000000:ios:0000000000000000',
+    messagingSenderId: '000000000000',
+    projectId: 'tu-proyecto-firebase',
+    storageBucket: 'tu-proyecto-firebase.appspot.com',
+    iosBundleId: 'com.example.vitrinaRegional',
+  );
+}

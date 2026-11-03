@@ -1,0 +1,20 @@
+{
+  "_comentario": "EJEMPLO. El archivo real lo genera `flutterfire configure` como android/app/google-services.json y NO se sube al repositorio (.gitignore).",
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "tu-proyecto-firebase",
+    "storage_bucket": "tu-proyecto-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+        "android_client_info": {
+          "package_name": "com.example.vitrina_regional"
+        }
+      },
+      "api_key": [{ "current_key": "REEMPLAZAR" }]
+    }
+  ],
+  "configuration_version": "1"
+}

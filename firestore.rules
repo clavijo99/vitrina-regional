@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// Reglas de seguridad de Cloud Firestore — Vitrina Regional.
+// Desplegar con: firebase deploy --only firestore:rules
+//
+// Principios:
+//   - Cualquier usuario AUTENTICADO puede leer.
+//   - Cada quien solo escribe lo suyo (su perfil, su emprendimiento, sus reseñas).
+//   - Las validaciones de domain (Dart) se repiten aquí: el cliente se puede
+//     manipular, el servidor no.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ---------------------------------------------------------------- users
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      // Solo el propio usuario crea/edita su documento y el rol es válido.
+      allow create, update: if isOwner(userId)
+        && request.resource.data.rol in ['emprendedor', 'cliente'];
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------- emprendimientos
+    match /emprendimientos/{empId} {
+      allow read: if isSignedIn();
+      // Al crear, el ownerId debe ser el usuario autenticado.
+      allow create: if isSignedIn()
+        && request.resource.data.ownerId == request.auth.uid;
+      // Solo el owner edita/borra, y no puede "regalar" el emprendimiento.
+      allow update: if isOwner(resource.data.ownerId)
+        && request.resource.data.ownerId == resource.data.ownerId;
+      allow delete: if isOwner(resource.data.ownerId);
+
+      // Subcolección productos: la controla el owner del emprendimiento padre.
+      match /productos/{productoId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(
+          get(/databases/$(database)/documents/emprendimientos/$(empId)).data.ownerId
+        );
+      }
+    }
+
+    // --------------------------------------------------------------- resenas
+    match /resenas/{resenaId} {
+      allow read: if isSignedIn();
+      // Solo autenticados, a su nombre, con 1 a 5 estrellas.
+      allow create: if isSignedIn()
+        && request.resource.data.autorId == request.auth.uid
+        && request.resource.data.estrellas is int
+        && request.resource.data.estrellas >= 1
+        && request.resource.data.estrellas <= 5
+        && request.resource.data.comentario is string
+        && request.resource.data.comentario.size() <= 500;
+      // Nadie edita reseñas ajenas; el autor puede editar/borrar la suya
+      // sin cambiar autor ni emprendimiento y respetando el rango 1-5.
+      allow update: if isOwner(resource.data.autorId)
+        && request.resource.data.autorId == resource.data.autorId
+        && request.resource.data.emprendimientoId == resource.data.emprendimientoId
+        && request.resource.data.estrellas >= 1
+        && request.resource.data.estrellas <= 5;
+      allow delete: if isOwner(resource.data.autorId);
+    }
+  }
+}
