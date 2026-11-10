@@ -12,7 +12,7 @@ enum FuenteImagen { camara, galeria }
 class ImagenSeleccionada extends Equatable {
   const ImagenSeleccionada({required this.bytes, required this.nombre});
 
-  /// Límite que también exige storage.rules.
+  /// Límite validado en el cliente antes de subir a Cloudinary.
   static const int maxBytes = 5 * 1024 * 1024;
 
   final Uint8List bytes;

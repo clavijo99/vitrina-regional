@@ -73,7 +73,7 @@ la 3.47.7).
 | `firebase_core` | ^5.1.0 | Inicialización de Firebase |
 | `firebase_auth` | ^7.0.1 | Autenticación por correo/contraseña |
 | `cloud_firestore` | ^7.1.0 | Base de datos en tiempo real |
-| `firebase_storage` | ^14.0.1 | Almacenamiento de imágenes |
+| `http` | ^1.2.2 | Subida de imágenes a Cloudinary (upload preset *unsigned*) |
 | `fpdart` | ^1.2.0 | `Either<Failure, T>` para errores tipados |
 | `equatable` | ^3.0.0 | Igualdad por valor en entidades y estados |
 | `geolocator` | ^14.1.2 | Ubicación del dispositivo (E2) |
@@ -304,7 +304,7 @@ vitrina_regional/
 │           │             repositories/imagen_repository_impl.dart
 │           └── presentation/ cubit/subir_imagen_cubit.dart
 ├── test/                                 # espejo de lib/ (+ helpers/fixtures.dart)
-├── firestore.rules · firestore.indexes.json · storage.rules · firebase.json
+├── firestore.rules · firestore.indexes.json · firebase.json
 ├── android/app/google-services.json.example
 ├── ios/Runner/GoogleService-Info.plist.example
 ├── .github/  workflows/ci.yml · pull_request_template.md
@@ -471,7 +471,7 @@ erDiagram
     }
 ```
 
-**Reglas de seguridad** (`firestore.rules`, `storage.rules`):
+**Reglas de seguridad** (`firestore.rules`):
 
 - Cualquier usuario **autenticado** lee.
 - `users/{uid}`: solo el propio usuario crea/edita su documento.
@@ -624,7 +624,7 @@ Al terminar una, **borren el comentario** y mencionen el código en el PR.
 | # | E1 · Fundamentos y Firebase | E2 · Mapa | E3 · Reseñas | E4 · Imágenes e integración |
 | - | --------------------------- | --------- | ------------ | --------------------------- |
 | 1 | Conectar Firebase (3) | Ubicación con geolocator (3) | Formulario de reseña (3) | Comprimir imagen (2) |
-| 2 | Identidad visual (1) | Marcador del usuario (1) | Retroalimentación del envío (1) | Subir a Storage (2) |
+| 2 | Identidad visual (1) | Marcador del usuario (1) | Retroalimentación del envío (1) | Subir a Cloudinary (2) |
 | 3 | Confirmar contraseña + test (2) | Marcador seleccionado + test (2) | Una reseña por cliente (2) | Editor de fotos (3) |
 | 4 | Emprendimiento real + test (2) | Hoja de resumen (2) | El dueño no se reseña (2) | Progreso de subida (1) |
 | 5 | Permisos de plataforma (1) | Botón "Mi ubicación" (2) | Ordenar reseñas (2) | Ubicación en el formulario (2) |

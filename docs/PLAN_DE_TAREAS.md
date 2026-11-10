@@ -43,7 +43,7 @@ gantt
 | # | E1 · Fundamentos | E2 · Mapa | E3 · Reseñas | E4 · Imágenes |
 | - | ---------------- | --------- | ------------ | ------------- |
 | 1 | Conectar Firebase **(3)** | Ubicación con geolocator **(3)** | Formulario de reseña **(3)** | Comprimir imagen **(2)** |
-| 2 | Identidad visual **(1)** | Marcador del usuario **(1)** | Retroalimentación del envío **(1)** | Subir a Storage **(2)** |
+| 2 | Identidad visual **(1)** | Marcador del usuario **(1)** | Retroalimentación del envío **(1)** | Subir a Cloudinary **(2)** |
 | 3 | Confirmar contraseña + test **(2)** | Marcador seleccionado + test **(2)** | Una reseña por cliente **(2)** | Editor de fotos **(3)** |
 | 4 | Emprendimiento real + test **(2)** | Hoja de resumen **(2)** | El dueño no se reseña **(2)** | Progreso de subida **(1)** |
 | 5 | Permisos de plataforma **(1)** | Botón "Mi ubicación" **(2)** | Ordenar reseñas **(2)** | Ubicación en el formulario **(2)** |
@@ -81,7 +81,7 @@ completas (`auth`, `emprendimientos`) y la conectan a Firebase.
 
 ### E1-1 · Conectar Firebase — 3 pts
 
-- **Archivos:** `lib/firebase_options.dart`, `lib/app/di/app_providers.dart`, `firestore.rules`, `storage.rules`, `firestore.indexes.json`
+- **Archivos:** `lib/firebase_options.dart`, `lib/app/di/app_providers.dart`, `firestore.rules`, `firestore.indexes.json`
 - **Criterios de aceptación:**
   - Proyecto Firebase con Authentication (correo/contraseña), Firestore y Storage.
   - `flutterfire configure` ejecutado y `useMockData = false`.
@@ -217,17 +217,19 @@ El stream ya funciona (`snapshots()` + `emit.forEach`): lean `ResenasBloc`.
 
 **Objetivo:** fotos reales en los emprendimientos, últimas integraciones y la demo.
 
+> **Storage = Cloudinary, NO Firebase Storage.** El plan Firebase **Spark (gratis)** ya no permite activar Firebase Storage (requiere Blaze). Las imágenes se suben a **Cloudinary** con un *upload preset* **unsigned** (sin backend y sin exponer el API secret). La implementación está en `CloudinaryImagenStorageDataSource` (`cloudName: ssuvy1rd`, `uploadPreset: vitrina_unsigned`, carpeta base `vitrina-regional/`). No usen `firebase_storage`, `UploadTask`, `ref.putData` ni `getDownloadURL`.
+
 ### E4-1 · Comprimir imagen — 2 pts
 
-- **Archivo:** `imagenes/data/datasources/imagen_storage_datasource.dart`
-- **Criterios:** la imagen subida pesa bastante menos que la original (compárenlo en la consola de Storage); si el códec falla se sube la original.
-- **Pistas:** `FlutterImageCompress.compressWithList(bytes, minWidth: 1280, minHeight: 1280, quality: 75)`.
+- **Archivo:** `imagenes/data/datasources/imagen_storage_datasource.dart` (`CloudinaryImagenStorageDataSource`)
+- **Criterios:** la imagen subida pesa bastante menos que la original (compárenlo en el **dashboard de Cloudinary → Media Library**); si el códec falla, se suben los bytes originales.
+- **Pistas:** `FlutterImageCompress.compressWithList(bytes, minWidth: 1280, minHeight: 1280, quality: 75)` dentro de un `try/catch` (hay plataformas de escritorio sin compresión nativa).
 
-### E4-2 · Subir a Storage — 2 pts
+### E4-2 · Subir a Cloudinary — 2 pts
 
 - **Archivo:** `imagen_storage_datasource.dart`
-- **Criterios:** devuelve una URL que abre la imagen; nombre de archivo único; errores de permiso → `PermissionException`, otros → `ServerException`.
-- **Pistas:** `ref.putData(bytes, SettableMetadata(contentType: 'image/jpeg'))` + `getDownloadURL()`.
+- **Criterios:** devuelve la URL (`secure_url`) que abre la imagen; cada archivo va a su subcarpeta (`vitrina-regional/{carpeta}`); preset mal configurado / rechazo (HTTP 401) → `PermissionException`, otros errores HTTP → `ServerException`.
+- **Pistas:** `http.MultipartRequest('POST', Uri.parse('https://api.cloudinary.com/v1_1/<cloudName>/image/upload'))` con `fields['upload_preset'] = '<preset unsigned>'`, `fields['folder'] = 'vitrina-regional/<carpeta>'` y `files.add(http.MultipartFile.fromBytes('file', bytes, filename: nombre))`; leer `secure_url` del JSON de respuesta. El preset *unsigned* evita backend y API secret.
 
 ### E4-3 · Editor de fotos — 3 pts
 
@@ -238,8 +240,10 @@ El stream ya funciona (`snapshots()` + `emit.forEach`): lean `ResenasBloc`.
 ### E4-4 · Progreso de subida — 1 pt
 
 - **Archivos:** `imagen_storage_datasource.dart`, `subir_imagen_cubit.dart`, `fotos_editor.dart`
-- **Criterios:** se ve el avance de 0 a 100 % mientras sube.
-- **Pistas:** `UploadTask.snapshotEvents` → callback `onProgreso` → campo `progreso` en `SubirImagenState` → `CircularProgressIndicator(value: ...)`.
+- **Criterios:** se ve el avance mientras sube (una barra/indicador durante `status == loading`).
+- **Pistas:** el paquete `http` **no** expone progreso de subida como el `UploadTask` de Firebase. Dos caminos:
+  - **Mínimo (1 pt):** indicador **indeterminado** — `CircularProgressIndicator()` (sin `value`) mientras el `SubirImagenCubit` está en `loading`.
+  - **Reto (barra real 0–100 %):** envolver los bytes del `MultipartRequest` en un `Stream` que cuente los bytes enviados (o cambiar la subida a `dio` con `onSendProgress`) → callback `onProgreso` → campo `progreso` en `SubirImagenState` → `CircularProgressIndicator(value: ...)`.
 
 ### E4-5 · Ubicación en el formulario — 2 pts
 
