@@ -1,15 +1,1 @@
-{
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "storage": {
-    "rules": "storage.rules"
-  },
-  "emulators": {
-    "auth": { "port": 9099 },
-    "firestore": { "port": 8080 },
-    "storage": { "port": 9199 },
-    "ui": { "enabled": true }
-  }
-}
+{"firestore":{"rules":"firestore.rules","indexes":"firestore.indexes.json"},"storage":{"rules":"storage.rules"},"emulators":{"auth":{"port":9099},"firestore":{"port":8080},"storage":{"port":9199},"ui":{"enabled":true}},"flutter":{"platforms":{"android":{"default":{"projectId":"vitrina-regional","appId":"1:168430847496:android:40944852588a7f66bd73bd","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"vitrina-regional","appId":"1:168430847496:ios:cf5fa7907644acb3bd73bd","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"vitrina-regional","appId":"1:168430847496:ios:cf5fa7907644acb3bd73bd","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"vitrina-regional","configurations":{"android":"1:168430847496:android:40944852588a7f66bd73bd","ios":"1:168430847496:ios:cf5fa7907644acb3bd73bd","macos":"1:168430847496:ios:cf5fa7907644acb3bd73bd","web":"1:168430847496:web:edae2f5a6b5890efbd73bd","windows":"1:168430847496:web:b993a717b1bf4b37bd73bd"}}}}}}

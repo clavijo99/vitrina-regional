@@ -7,8 +7,6 @@ import 'package:vitrina_regional/app/di/app_providers.dart';
 import 'package:vitrina_regional/core/bloc/app_bloc_observer.dart';
 import 'package:vitrina_regional/firebase_options.dart';
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

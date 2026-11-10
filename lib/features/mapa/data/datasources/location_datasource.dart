@@ -23,10 +23,6 @@ class GeolocatorLocationDataSource implements LocationDataSource {
     //   4. `Geolocator.getCurrentPosition(locationSettings:
     //        const LocationSettings(accuracy: LocationAccuracy.high))`
     //      y devolver Ubicacion(latitud: p.latitude, longitud: p.longitude).
-    // TODO(COIL-E1-5): Declarar los permisos de ubicación en
-    //   android/app/src/main/AndroidManifest.xml (ACCESS_FINE_LOCATION y
-    //   ACCESS_COARSE_LOCATION) e ios/Runner/Info.plist
-    //   (NSLocationWhenInUseUsageDescription).
     throw const LocationException('Ubicación pendiente (encuentro E2).');
   }
 }

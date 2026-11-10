@@ -24,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _nombreController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordValidateController = TextEditingController();
   UserRole _rol = UserRole.cliente;
 
   @override
@@ -31,6 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _nombreController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordValidateController.dispose();
     super.dispose();
   }
 
@@ -118,6 +120,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: Icons.lock_outline,
                         obscureText: true,
                         validator: Validators.password,
+                      ),
+                      AppTextField(
+                        label: 'Validar Contraseña',
+                        controller: _passwordValidateController,
+                        prefixIcon: Icons.lock_outline,
+                        obscureText: true,
+                        validator: (value) => Validators.confirmarContrasena(
+                          value ?? '',
+                          _passwordController.text,
+                        ),
                       ),
                       // TODO(COIL-E1-3): Agregar un campo "Confirmar contraseña"
                       // que valide que coincide con la anterior.

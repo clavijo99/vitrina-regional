@@ -1,7 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Necesario en release para Firebase y las teselas del mapa. -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- TODO(COIL-E1-5): permisos ACCESS_FINE_LOCATION y ACCESS_COARSE_LOCATION. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
     <application
         android:label="vitrina_regional"
         android:name="${applicationName}"

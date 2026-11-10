@@ -66,5 +66,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Usamos tu ubicación para mostrarte los emprendimientos más cercanos en el mapa.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Usamos la cámara para que tomes fotos de tu emprendimiento y tus productos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Usamos tu galería para que elijas fotos de tu emprendimiento y tus productos.</string>
 </dict>
 </plist>

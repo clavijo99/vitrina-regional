@@ -22,5 +22,11 @@ void main() {
       expect(Validators.latitud('95'), isNotNull);
       expect(Validators.longitud('-73,62'), isNull);
     });
+
+    test('Comparar contraseñas', () {
+      expect(Validators.confirmarContrasena('123456', '123456'), isNull);
+      expect(Validators.confirmarContrasena('123456', '23456'), 'Las contraseñas no coinciden');
+      expect(Validators.confirmarContrasena('', '123456'), isNotNull);
+    });
   });
 }

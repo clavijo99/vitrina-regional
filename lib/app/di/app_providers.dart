@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vitrina_regional/features/auth/data/datasources/auth_mock_datasource.dart';
@@ -46,7 +45,7 @@ import 'package:vitrina_regional/features/resenas/domain/usecases/watch_resenas.
 ///
 /// Es el ÚNICO interruptor que hay que tocar para cambiar de backend: gracias
 /// a Clean Architecture, ni los Blocs ni las pantallas se enteran.
-const bool useMockData = true;
+const bool useMockData = false;
 
 /// Raíz de composición (composition root): aquí, y SOLO aquí, se decide qué
 /// implementación concreta recibe cada contrato. No usamos get_it: todo se
@@ -94,7 +93,7 @@ class AppProviders extends StatelessWidget {
         RepositoryProvider<ImagenStorageDataSource>(
           create: (_) => useMockData
               ? const MockImagenStorageDataSource()
-              : FirebaseImagenStorageDataSource(FirebaseStorage.instance),
+              : const CloudinaryImagenStorageDataSource(),
         ),
 
         // ---------------- 2. Repositorios (contratos de domain) -----------

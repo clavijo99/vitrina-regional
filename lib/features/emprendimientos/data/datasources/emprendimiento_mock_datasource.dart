@@ -192,5 +192,22 @@ class MockEmprendimientoDataSource implements EmprendimientoDataSource {
         ProductoModel(id: 'p13', nombre: 'Manilla artesanal', precio: 15000),
       ],
     ),
+        EmprendimientoModel(
+      id: 'emp-doña-rosa',
+      ownerId: 'owner-rosa',
+      nombre: 'Arepas Doña rosa',
+      descripcion:
+          'Ventas de arepas doña rosa'
+          'Boliva, elaborados en Villavicencio.',
+      categoria: 'gastronomia',
+      fotos: [_foto('arepas-doña-rosa')],
+      latitud: 4.3133,
+      longitud: -72.0820,
+      municipio: 'Villavicencio',
+      productos: const [
+        ProductoModel(id: 'p14', nombre: 'Carne', precio: 9500),
+        ProductoModel(id: 'p15', nombre: 'Pollo', precio: 1500),
+      ],
+    ),
   ];
 }

@@ -24,6 +24,17 @@ abstract final class Validators {
     return null;
   }
 
+  static String? confirmarContrasena(String value, String original) {
+    final requeridoError = requerido(value, campo: 'La confirmacion');
+    if (requeridoError != null) {
+      return requeridoError;
+    }
+    if (value != original) {
+      return 'Las contraseñas no coinciden';
+    }
+    return null;
+  }
+
   static String? nombre(String? value) {
     final requeridoError = requerido(value, campo: 'El nombre');
     if (requeridoError != null) return requeridoError;
