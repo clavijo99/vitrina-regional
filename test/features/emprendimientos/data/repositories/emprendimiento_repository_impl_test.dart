@@ -66,9 +66,9 @@ void main() {
       );
     });
 
-    test('trae los 6 emprendimientos de ejemplo', () async {
+    test('trae los 7 emprendimientos de ejemplo', () async {
       final result = await repository.getEmprendimientos();
-      expect(result.getRight().toNullable(), hasLength(6));
+      expect(result.getRight().toNullable(), hasLength(7));
     });
 
     test('filtra por categoría', () async {

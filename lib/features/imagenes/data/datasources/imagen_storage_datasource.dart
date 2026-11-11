@@ -60,11 +60,7 @@ class CloudinaryImagenStorageDataSource implements ImagenStorageDataSource {
         // Subcarpeta por recurso, ej.: `emprendimientos/{id}`.
         ..fields['folder'] = 'vitrina-regional/$carpeta'
         ..files.add(
-          http.MultipartFile.fromBytes(
-            'file',
-            comprimidos,
-            filename: nombre,
-          ),
+          http.MultipartFile.fromBytes('file', comprimidos, filename: nombre),
         );
 
       final streamed = await request.send();

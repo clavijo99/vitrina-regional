@@ -45,7 +45,7 @@ import 'package:vitrina_regional/features/resenas/domain/usecases/watch_resenas.
 ///
 /// Es el ÚNICO interruptor que hay que tocar para cambiar de backend: gracias
 /// a Clean Architecture, ni los Blocs ni las pantallas se enteran.
-const bool useMockData = false;
+const bool useMockData = !bool.fromEnvironment('USE_FIREBASE');
 
 /// Raíz de composición (composition root): aquí, y SOLO aquí, se decide qué
 /// implementación concreta recibe cada contrato. No usamos get_it: todo se
