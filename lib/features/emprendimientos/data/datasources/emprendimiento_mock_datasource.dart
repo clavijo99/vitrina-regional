@@ -192,7 +192,7 @@ class MockEmprendimientoDataSource implements EmprendimientoDataSource {
         ProductoModel(id: 'p13', nombre: 'Manilla artesanal', precio: 15000),
       ],
     ),
-        EmprendimientoModel(
+    EmprendimientoModel(
       id: 'emp-doña-rosa',
       ownerId: 'owner-rosa',
       nombre: 'Arepas Doña rosa',

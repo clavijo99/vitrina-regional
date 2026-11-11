@@ -25,7 +25,10 @@ void main() {
 
     test('Comparar contraseñas', () {
       expect(Validators.confirmarContrasena('123456', '123456'), isNull);
-      expect(Validators.confirmarContrasena('123456', '23456'), 'Las contraseñas no coinciden');
+      expect(
+        Validators.confirmarContrasena('123456', '23456'),
+        'Las contraseñas no coinciden',
+      );
       expect(Validators.confirmarContrasena('', '123456'), isNotNull);
     });
   });
