@@ -71,6 +71,7 @@ class SubirImagenCubit extends Cubit<SubirImagenState> {
   // subir_imagen_cubit_test, un caso que verifique los estados de progreso;
   // (b) un test de widget de FotosEditor que agregue y quite una foto
   // (mockeando SeleccionarImagen y SubirImagen con mocktail).
-  // TODO(COIL-E4-4): Exponer el progreso de subida (UploadTask.snapshotEvents)
-  // para mostrar una barra de progreso.
+  // TODO(COIL-E4-4): Exponer el progreso de subida a Cloudinary. El paquete
+  // `http` no da progreso nativo: usar un indicador indeterminado durante
+  // `loading`, o (reto) un Stream contador de bytes / `dio` con onSendProgress.
 }
