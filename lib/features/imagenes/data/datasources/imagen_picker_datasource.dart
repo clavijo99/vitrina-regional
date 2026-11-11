@@ -28,7 +28,4 @@ class ImagePickerDataSource implements ImagenPickerDataSource {
       nombre: archivo.name,
     );
   }
-  // TODO(COIL-E1-5): Declarar permisos de cámara/galería en
-  // ios/Runner/Info.plist (NSCameraUsageDescription y
-  // NSPhotoLibraryUsageDescription).
 }

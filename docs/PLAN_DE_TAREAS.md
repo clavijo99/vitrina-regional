@@ -11,6 +11,7 @@ cada semana y cada integrante tenga trabajo real en todos los encuentros.
 | **1** | ~30 min | Configuración, un campo, un ajuste visual |
 | **2** | ~1 h | Lógica + UI pequeña, o lógica + su test |
 | **3** | ~2 h | Feature nueva con varias piezas o integración con servicio externo |
+| **** | ~2 h | Validar version de sdk android |
 
 ---
 

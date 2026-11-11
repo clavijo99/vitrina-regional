@@ -1,9 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Tema claro/oscuro (Material 3) con colores inspirados en los Llanos.
 abstract final class AppTheme {
-  // TODO(COIL-E1-2): Ajusten los colores de marca que acuerde el equipo
-  // (y, si quieren, una fuente propia declarada en pubspec.yaml).
   static const Color verdeLlanero = Color(0xFF2E7D32);
   static const Color atardecer = Color(0xFFEF6C00);
 
